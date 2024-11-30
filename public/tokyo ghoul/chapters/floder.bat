@@ -1,0 +1,1 @@
+@<"name_floaders.txt" (for /f "delims=" %%i in ('more') do @md "%%~i")

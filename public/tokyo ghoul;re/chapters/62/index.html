@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Глава 62</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #171717;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+.modal {
+  display: flex; /* Flex-контейнер */
+  visibility: hidden; /* Скрыто по умолчанию */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Начальное состояние: невидимое */
+  transform: scale(0.9); /* Уменьшенный размер для эффекта появления */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.modal.show {
+  visibility: visible; /* Делает модальное окно видимым */
+  opacity: 1; /* Плавное появление */
+  transform: scale(1); /* Нормальный размер */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Плавный переход */
+}
+
+.modal-content {
+ background: rgb(116,116,116);
+background: linear-gradient(180deg, rgba(116,116,116,0.9626225490196079) 0%, rgba(172,172,172,0.9542191876750701) 24%, rgba(147,147,147,0.9598214285714286) 70%, rgba(199,199,199,0.9458158263305322) 95%);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%; /* Адаптация под экран */
+  max-height: 80%; /* Ограничение высоты */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  overflow-y: auto; /* Прокрутка при переполнении */
+}
+
+.modal-content a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 15px;
+  text-decoration: none;
+  background-color: #1a1a1a;
+  color: #f6f6f6;
+  border-radius: 5px;
+  transition: .3s;
+}
+
+.modal-content a:hover {
+  background-color: #444;
+}
+
+.close {
+  cursor: pointer;
+  color: #aaa;
+  font-size: 20px;
+  float: right;
+}
+
+#openModalButton {
+display: flex;
+justify-content: flex-end;
+padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: .5s ease;
+}
+ #openModalButton:hover {
+ background-color: #444;
+ color: #fff;
+ }   
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 100%; /* Убедились, что не выходим за пределы */
+  width: 100%;
+  box-sizing: border-box;
+}
+    .images img {
+  max-width: 100%;
+  height: auto; /* Убедились, что изображения не растягиваются */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+    .header {
+  position: relative;  
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px; /* Уменьшили padding */
+  background-color: #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box; /* Убедились, что padding включён в размеры */
+}
+    .logo-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Добавлено для адаптации */
+}
+    .logo {
+      width: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .site-title {
+      font-size: 18px;
+      color: white;
+      font-weight: 500;
+    }
+    .header a {
+      position: relative;
+      font-size: 18px;
+      color: white;
+      font-weight: 500;
+      text-decoration: none;
+      margin-left: 40px;
+      cursor: pointer;
+    }
+    .header a::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: 0.3s;
+    }
+    .header i {
+      font-size: 20px;
+    }
+    .header a:hover::before {
+      width: 100%;
+    }
+    .nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px;
+  flex-wrap: wrap; /* Добавлено для переноса элементов */
+}
+    .nav-bar a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-bar a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav>
+      <div class="logo-container">
+        <a href="/index.html"><img src="/public/image/logo.webp" alt="Logo" class="logo"></a>
+        <a href="/index.html"><span class="site-title">Wabi & Sabi</span></a>
+        <a href="/public/tokyo ghoul;re/index.html">Tokyo Ghoul</a>
+      </div>
+    </nav>
+    <nav class="navbar">
+      <a href="#">Закладки</a>
+      <a href="#">User</a>
+    </nav>
+  </header>
+<button id="openModalButton">Все главы</button>
+
+<div id="chapterModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2>Доступные главы</h2>
+    <a href="../1/index.html">Глава 1</a><a href="../2/index.html">Глава 2</a><a href="../3/index.html">Глава 3</a><a href="../4/index.html">Глава 4</a><a href="../5/index.html">Глава 5</a><a href="../6/index.html">Глава 6</a><a href="../7/index.html">Глава 7</a><a href="../8/index.html">Глава 8</a><a href="../9/index.html">Глава 9</a><a href="../10/index.html">Глава 10</a><a href="../11/index.html">Глава 11</a><a href="../12/index.html">Глава 12</a><a href="../13/index.html">Глава 13</a><a href="../14/index.html">Глава 14</a><a href="../15/index.html">Глава 15</a><a href="../16/index.html">Глава 16</a><a href="../17/index.html">Глава 17</a><a href="../18/index.html">Глава 18</a><a href="../19/index.html">Глава 19</a><a href="../20/index.html">Глава 20</a><a href="../21/index.html">Глава 21</a><a href="../22/index.html">Глава 22</a><a href="../23/index.html">Глава 23</a><a href="../24/index.html">Глава 24</a><a href="../25/index.html">Глава 25</a><a href="../26/index.html">Глава 26</a><a href="../27/index.html">Глава 27</a><a href="../28/index.html">Глава 28</a><a href="../29/index.html">Глава 29</a><a href="../30/index.html">Глава 30</a><a href="../31/index.html">Глава 31</a><a href="../32/index.html">Глава 32</a><a href="../33/index.html">Глава 33</a><a href="../34/index.html">Глава 34</a><a href="../35/index.html">Глава 35</a><a href="../36/index.html">Глава 36</a><a href="../37/index.html">Глава 37</a><a href="../38/index.html">Глава 38</a><a href="../39/index.html">Глава 39</a><a href="../40/index.html">Глава 40</a><a href="../41/index.html">Глава 41</a><a href="../42/index.html">Глава 42</a><a href="../43/index.html">Глава 43</a><a href="../44/index.html">Глава 44</a><a href="../45/index.html">Глава 45</a><a href="../46/index.html">Глава 46</a><a href="../47/index.html">Глава 47</a><a href="../48/index.html">Глава 48</a><a href="../49/index.html">Глава 49</a><a href="../50/index.html">Глава 50</a><a href="../51/index.html">Глава 51</a><a href="../52/index.html">Глава 52</a><a href="../53/index.html">Глава 53</a><a href="../54/index.html">Глава 54</a><a href="../55/index.html">Глава 55</a><a href="../56/index.html">Глава 56</a><a href="../57/index.html">Глава 57</a><a href="../58/index.html">Глава 58</a><a href="../59/index.html">Глава 59</a><a href="../60/index.html">Глава 60</a><a href="../61/index.html">Глава 61</a><a href="../62/index.html">Глава 62</a><a href="../63/index.html">Глава 63</a><a href="../64/index.html">Глава 64</a><a href="../65/index.html">Глава 65</a><a href="../66/index.html">Глава 66</a><a href="../67/index.html">Глава 67</a><a href="../68/index.html">Глава 68</a><a href="../69/index.html">Глава 69</a><a href="../70/index.html">Глава 70</a><a href="../71/index.html">Глава 71</a><a href="../72/index.html">Глава 72</a><a href="../73/index.html">Глава 73</a><a href="../74/index.html">Глава 74</a><a href="../75/index.html">Глава 75</a><a href="../76/index.html">Глава 76</a><a href="../77/index.html">Глава 77</a><a href="../78/index.html">Глава 78</a><a href="../79/index.html">Глава 79</a><a href="../80/index.html">Глава 80</a><a href="../81/index.html">Глава 81</a><a href="../82/index.html">Глава 82</a><a href="../83/index.html">Глава 83</a><a href="../84/index.html">Глава 84</a><a href="../85/index.html">Глава 85</a><a href="../86/index.html">Глава 86</a><a href="../87/index.html">Глава 87</a><a href="../88/index.html">Глава 88</a><a href="../89/index.html">Глава 89</a><a href="../90/index.html">Глава 90</a><a href="../91/index.html">Глава 91</a><a href="../92/index.html">Глава 92</a><a href="../93/index.html">Глава 93</a><a href="../94/index.html">Глава 94</a><a href="../95/index.html">Глава 95</a><a href="../96/index.html">Глава 96</a><a href="../97/index.html">Глава 97</a><a href="../98/index.html">Глава 98</a><a href="../99/index.html">Глава 99</a><a href="../100/index.html">Глава 100</a><a href="../101/index.html">Глава 101</a><a href="../102/index.html">Глава 102</a><a href="../103/index.html">Глава 103</a><a href="../104/index.html">Глава 104</a><a href="../105/index.html">Глава 105</a><a href="../106/index.html">Глава 106</a><a href="../107/index.html">Глава 107</a><a href="../108/index.html">Глава 108</a><a href="../109/index.html">Глава 109</a><a href="../110/index.html">Глава 110</a><a href="../111/index.html">Глава 111</a><a href="../112/index.html">Глава 112</a><a href="../113/index.html">Глава 113</a><a href="../114/index.html">Глава 114</a><a href="../115/index.html">Глава 115</a><a href="../116/index.html">Глава 116</a><a href="../117/index.html">Глава 117</a><a href="../118/index.html">Глава 118</a><a href="../119/index.html">Глава 119</a><a href="../120/index.html">Глава 120</a><a href="../121/index.html">Глава 121</a><a href="../122/index.html">Глава 122</a><a href="../123/index.html">Глава 123</a><a href="../124/index.html">Глава 124</a><a href="../125/index.html">Глава 125</a><a href="../126/index.html">Глава 126</a><a href="../127/index.html">Глава 127</a><a href="../128/index.html">Глава 128</a><a href="../129/index.html">Глава 129</a><a href="../130/index.html">Глава 130</a><a href="../131/index.html">Глава 131</a><a href="../132/index.html">Глава 132</a><a href="../133/index.html">Глава 133</a><a href="../134/index.html">Глава 134</a><a href="../135/index.html">Глава 135</a><a href="../136/index.html">Глава 136</a><a href="../137/index.html">Глава 137</a><a href="../138/index.html">Глава 138</a><a href="../139/index.html">Глава 139</a><a href="../140/index.html">Глава 140</a><a href="../141/index.html">Глава 141</a><a href="../142/index.html">Глава 142</a><a href="../143/index.html">Глава 143</a><a href="../144/index.html">Глава 144</a><a href="../145/index.html">Глава 145</a><a href="../146/index.html">Глава 146</a><a href="../147/index.html">Глава 147</a><a href="../148/index.html">Глава 148</a><a href="../149/index.html">Глава 149</a><a href="../150/index.html">Глава 150</a><a href="../151/index.html">Глава 151</a><a href="../152/index.html">Глава 152</a><a href="../153/index.html">Глава 153</a><a href="../154/index.html">Глава 154</a><a href="../155/index.html">Глава 155</a><a href="../156/index.html">Глава 156</a><a href="../157/index.html">Глава 157</a><a href="../158/index.html">Глава 158</a><a href="../159/index.html">Глава 159</a><a href="../160/index.html">Глава 160</a><a href="../161/index.html">Глава 161</a><a href="../162/index.html">Глава 162</a><a href="../163/index.html">Глава 163</a><a href="../164/index.html">Глава 164</a><a href="../165/index.html">Глава 165</a><a href="../166/index.html">Глава 166</a><a href="../167/index.html">Глава 167</a><a href="../168/index.html">Глава 168</a><a href="../169/index.html">Глава 169</a><a href="../170/index.html">Глава 170</a><a href="../171/index.html">Глава 171</a><a href="../172/index.html">Глава 172</a><a href="../173/index.html">Глава 173</a><a href="../174/index.html">Глава 174</a><a href="../175/index.html">Глава 175</a><a href="../176/index.html">Глава 176</a><a href="../177/index.html">Глава 177</a><a href="../178/index.html">Глава 178</a><a href="../179/index.html">Глава 179</a><a href="../180/index.html">Глава 180</a>
+  </div>
+</div>
+<div class="nav-bar">
+    <a href="../61/index.html"><i class='bx bx-skip-previous'></i>prew</a>
+    <a href="./index.html">62</a>
+    <a href="../63/index.html">next<i class='bx bx-skip-next'></i></a>
+  </div>
+  <h1>Глава 62</h1>
+  <div class="images">
+    <img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/001.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/002.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/003.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/004.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/005.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/006.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/007.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/008.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/009.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/010.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/011.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/012.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/013.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/014.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/015.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/016.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/017.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/018.jpg" alt="Страница">
+<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul%3Are-chapters/chapters/62/images/019.jpg" alt="Страница">
+  </div>
+
+  <div id="chapterModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">×</span>
+      <h2>Доступные главы</h2>
+      <a href="../1/index.html">Глава 1</a><a href="../2/index.html">Глава 2</a><a href="../3/index.html">Глава 3</a><a href="../4/index.html">Глава 4</a><a href="../5/index.html">Глава 5</a><a href="../6/index.html">Глава 6</a><a href="../7/index.html">Глава 7</a><a href="../8/index.html">Глава 8</a><a href="../9/index.html">Глава 9</a><a href="../10/index.html">Глава 10</a><a href="../11/index.html">Глава 11</a><a href="../12/index.html">Глава 12</a><a href="../13/index.html">Глава 13</a><a href="../14/index.html">Глава 14</a><a href="../15/index.html">Глава 15</a><a href="../16/index.html">Глава 16</a><a href="../17/index.html">Глава 17</a><a href="../18/index.html">Глава 18</a><a href="../19/index.html">Глава 19</a><a href="../20/index.html">Глава 20</a><a href="../21/index.html">Глава 21</a><a href="../22/index.html">Глава 22</a><a href="../23/index.html">Глава 23</a><a href="../24/index.html">Глава 24</a><a href="../25/index.html">Глава 25</a><a href="../26/index.html">Глава 26</a><a href="../27/index.html">Глава 27</a><a href="../28/index.html">Глава 28</a><a href="../29/index.html">Глава 29</a><a href="../30/index.html">Глава 30</a><a href="../31/index.html">Глава 31</a><a href="../32/index.html">Глава 32</a><a href="../33/index.html">Глава 33</a><a href="../34/index.html">Глава 34</a><a href="../35/index.html">Глава 35</a><a href="../36/index.html">Глава 36</a><a href="../37/index.html">Глава 37</a><a href="../38/index.html">Глава 38</a><a href="../39/index.html">Глава 39</a><a href="../40/index.html">Глава 40</a><a href="../41/index.html">Глава 41</a><a href="../42/index.html">Глава 42</a><a href="../43/index.html">Глава 43</a><a href="../44/index.html">Глава 44</a><a href="../45/index.html">Глава 45</a><a href="../46/index.html">Глава 46</a><a href="../47/index.html">Глава 47</a><a href="../48/index.html">Глава 48</a><a href="../49/index.html">Глава 49</a><a href="../50/index.html">Глава 50</a><a href="../51/index.html">Глава 51</a><a href="../52/index.html">Глава 52</a><a href="../53/index.html">Глава 53</a><a href="../54/index.html">Глава 54</a><a href="../55/index.html">Глава 55</a><a href="../56/index.html">Глава 56</a><a href="../57/index.html">Глава 57</a><a href="../58/index.html">Глава 58</a><a href="../59/index.html">Глава 59</a><a href="../60/index.html">Глава 60</a><a href="../61/index.html">Глава 61</a><a href="../62/index.html">Глава 62</a><a href="../63/index.html">Глава 63</a><a href="../64/index.html">Глава 64</a><a href="../65/index.html">Глава 65</a><a href="../66/index.html">Глава 66</a><a href="../67/index.html">Глава 67</a><a href="../68/index.html">Глава 68</a><a href="../69/index.html">Глава 69</a><a href="../70/index.html">Глава 70</a><a href="../71/index.html">Глава 71</a><a href="../72/index.html">Глава 72</a><a href="../73/index.html">Глава 73</a><a href="../74/index.html">Глава 74</a><a href="../75/index.html">Глава 75</a><a href="../76/index.html">Глава 76</a><a href="../77/index.html">Глава 77</a><a href="../78/index.html">Глава 78</a><a href="../79/index.html">Глава 79</a><a href="../80/index.html">Глава 80</a><a href="../81/index.html">Глава 81</a><a href="../82/index.html">Глава 82</a><a href="../83/index.html">Глава 83</a><a href="../84/index.html">Глава 84</a><a href="../85/index.html">Глава 85</a><a href="../86/index.html">Глава 86</a><a href="../87/index.html">Глава 87</a><a href="../88/index.html">Глава 88</a><a href="../89/index.html">Глава 89</a><a href="../90/index.html">Глава 90</a><a href="../91/index.html">Глава 91</a><a href="../92/index.html">Глава 92</a><a href="../93/index.html">Глава 93</a><a href="../94/index.html">Глава 94</a><a href="../95/index.html">Глава 95</a><a href="../96/index.html">Глава 96</a><a href="../97/index.html">Глава 97</a><a href="../98/index.html">Глава 98</a><a href="../99/index.html">Глава 99</a><a href="../100/index.html">Глава 100</a><a href="../101/index.html">Глава 101</a><a href="../102/index.html">Глава 102</a><a href="../103/index.html">Глава 103</a><a href="../104/index.html">Глава 104</a><a href="../105/index.html">Глава 105</a><a href="../106/index.html">Глава 106</a><a href="../107/index.html">Глава 107</a><a href="../108/index.html">Глава 108</a><a href="../109/index.html">Глава 109</a><a href="../110/index.html">Глава 110</a><a href="../111/index.html">Глава 111</a><a href="../112/index.html">Глава 112</a><a href="../113/index.html">Глава 113</a><a href="../114/index.html">Глава 114</a><a href="../115/index.html">Глава 115</a><a href="../116/index.html">Глава 116</a><a href="../117/index.html">Глава 117</a><a href="../118/index.html">Глава 118</a><a href="../119/index.html">Глава 119</a><a href="../120/index.html">Глава 120</a><a href="../121/index.html">Глава 121</a><a href="../122/index.html">Глава 122</a><a href="../123/index.html">Глава 123</a><a href="../124/index.html">Глава 124</a><a href="../125/index.html">Глава 125</a><a href="../126/index.html">Глава 126</a><a href="../127/index.html">Глава 127</a><a href="../128/index.html">Глава 128</a><a href="../129/index.html">Глава 129</a><a href="../130/index.html">Глава 130</a><a href="../131/index.html">Глава 131</a><a href="../132/index.html">Глава 132</a><a href="../133/index.html">Глава 133</a><a href="../134/index.html">Глава 134</a><a href="../135/index.html">Глава 135</a><a href="../136/index.html">Глава 136</a><a href="../137/index.html">Глава 137</a><a href="../138/index.html">Глава 138</a><a href="../139/index.html">Глава 139</a><a href="../140/index.html">Глава 140</a><a href="../141/index.html">Глава 141</a><a href="../142/index.html">Глава 142</a><a href="../143/index.html">Глава 143</a><a href="../144/index.html">Глава 144</a><a href="../145/index.html">Глава 145</a><a href="../146/index.html">Глава 146</a><a href="../147/index.html">Глава 147</a><a href="../148/index.html">Глава 148</a><a href="../149/index.html">Глава 149</a><a href="../150/index.html">Глава 150</a><a href="../151/index.html">Глава 151</a><a href="../152/index.html">Глава 152</a><a href="../153/index.html">Глава 153</a><a href="../154/index.html">Глава 154</a><a href="../155/index.html">Глава 155</a><a href="../156/index.html">Глава 156</a><a href="../157/index.html">Глава 157</a><a href="../158/index.html">Глава 158</a><a href="../159/index.html">Глава 159</a><a href="../160/index.html">Глава 160</a><a href="../161/index.html">Глава 161</a><a href="../162/index.html">Глава 162</a><a href="../163/index.html">Глава 163</a><a href="../164/index.html">Глава 164</a><a href="../165/index.html">Глава 165</a><a href="../166/index.html">Глава 166</a><a href="../167/index.html">Глава 167</a><a href="../168/index.html">Глава 168</a><a href="../169/index.html">Глава 169</a><a href="../170/index.html">Глава 170</a><a href="../171/index.html">Глава 171</a><a href="../172/index.html">Глава 172</a><a href="../173/index.html">Глава 173</a><a href="../174/index.html">Глава 174</a><a href="../175/index.html">Глава 175</a><a href="../176/index.html">Глава 176</a><a href="../177/index.html">Глава 177</a><a href="../178/index.html">Глава 178</a><a href="../179/index.html">Глава 179</a><a href="../180/index.html">Глава 180</a>
+    </div>
+  </div>
+  <div class="nav-bar">
+    <a href="../61/index.html"><i class='bx bx-skip-previous'></i>prew</a>
+    <a href="./index.html">62</a>
+    <a href="../63/index.html">next<i class='bx bx-skip-next'></i></a>
+  </div>
+<script>
+    // Получение кнопки и модального окна
+const openModalButton = document.getElementById('openModalButton');
+const chapterModal = document.getElementById('chapterModal');
+
+// Функция для открытия модального окна
+function openModal() {
+  chapterModal.classList.add('show');
+}
+
+// Функция для закрытия модального окна
+function closeModal() {
+  chapterModal.classList.remove('show');
+}
+
+// Добавление обработчиков событий
+openModalButton.addEventListener('click', openModal);
+
+// Закрытие окна при клике вне содержимого модального окна
+chapterModal.addEventListener('click', (event) => {
+  if (event.target === chapterModal) {
+    closeModal();
+  }
+});
+  </script>
+</body>
+</html>
