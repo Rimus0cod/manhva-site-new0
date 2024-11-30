@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { listImages } = require('./gcs'); // Подключаем модуль работы с GCS
 
-const totalChapters = 205; // Количество глав
+const totalChapters = 201; // Количество глав
 const outputDir = path.join('C:/Users/diff/code/manhva-site/public/sololeveling/', 'chapters'); // Локальная папка для сохранения HTML
 
 // Генерация HTML-шаблона
@@ -263,7 +263,7 @@ padding: 10px 15px;
   <h1>Глава ${chapterNumber}</h1>
 
   <div class="images">
-    ${images.map((img) => `<img src="https://storage.googleapis.com/chapters-for-manga/sololeveling-chapters/${chapterNumber}/images/${img}" alt="Страница">`).join('\n')}
+    ${images.map((img) => `<img src="https://storage.googleapis.com/chapters-for-manga/sololeveling-chapters/chapters/${chapterNumber}/images/${img}" alt="Страница">`).join('\n')}
   </div>
 
   

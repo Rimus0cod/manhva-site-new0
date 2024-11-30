@@ -115,7 +115,7 @@ body {
   background-color: #780606;
 }
 
-.add {
+#addBookmark {
   color: #fff;
   background-color: #1976d2;
   border: none;
@@ -124,9 +124,10 @@ body {
   border-radius: 10px;
   padding: 0.6vh 2vh;
   transition: 0.5s;
+  cursor: pointer;
 }
 
-.add:hover {
+#addBookmark:hover {
   background-color: #780606;
   justify-content: space-around;
 }

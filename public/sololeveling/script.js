@@ -32,7 +32,7 @@ btn.addEventListener('click', () => {
 
   document.addEventListener("DOMContentLoaded", () => {
     const chapterList = document.getElementById("chapter-list");
-    const totalChapters = 205;
+    const totalChapters = 201;
     const chaptersPerLoad = 10;
     let loadedChapters = 0;
   

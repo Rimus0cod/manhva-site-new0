@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #171717;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Навигация */
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px; /* Уменьшили padding */
+  background-color: #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box; /* Убедились, что padding включён в размеры */
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Добавлено для адаптации */
+}
+.logo {
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.site-title {
+  font-size: 18px;
+  color: white;
+  font-weight: 500;
+}
+.header a {
+  position: relative;
+  font-size: 18px;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+  cursor: pointer;
+}
+.header a::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: 0.3s;
+}
+.header i {
+  font-size: 20px;
+}
+.header a:hover::before {
+  width: 100%;
+}

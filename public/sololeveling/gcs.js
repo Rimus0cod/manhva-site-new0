@@ -16,7 +16,7 @@ const bucketName = 'chapters-for-manga';
 
 // Функция получения списка изображений из бакета
 async function listImages(chapterNumber) {
-  const folderPath = `tokyo-ghoul-chapters/${chapterNumber}/images/`; // Путь к папке главы
+  const folderPath = `sololeveling-chapters/chapters/${chapterNumber}/images/`; // Путь к папке главы
   const [files] = await storage.bucket(bucketName).getFiles({ prefix: folderPath });
 
   // Фильтруем только изображения
@@ -27,7 +27,7 @@ async function listImages(chapterNumber) {
 
 // Функция скачивания изображений
 async function downloadImages(chapterNumber, localDir) {
-  const folderPath = `tokyo-ghoul-chapters/${chapterNumber}/images/`;
+  const folderPath = `sololeveling-chapters/chapters/${chapterNumber}/images/`;
   const [files] = await storage.bucket(bucketName).getFiles({ prefix: folderPath });
 
   if (!fs.existsSync(localDir)) {
