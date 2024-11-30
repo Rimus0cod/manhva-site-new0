@@ -9,7 +9,7 @@
 
 body {
   min-height: 100vh;
-  background: url(/public/image/rxxx1704430473104-1214822565.webp);
+  background: url(/public/image/Tokyo\ Ghoul.jpg);
   backdrop-filter: blur(10px);
   background-size: cover;
   background-position: center;
@@ -204,6 +204,8 @@ body {
 
 .slider-content.active {
   display: block;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .disc {

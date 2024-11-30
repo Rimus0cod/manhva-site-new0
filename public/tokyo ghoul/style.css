@@ -204,6 +204,8 @@ body {
 
 .slider-content.active {
   display: block;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .disc {

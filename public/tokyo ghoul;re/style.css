@@ -9,7 +9,7 @@
 
 body {
   min-height: 100vh;
-  background: url(/public/image/TokyoGhoulRe116_1200x630_Blog_Splash.jpg);
+  background: url(/public/image/Tokyo\ Ghoul.jpg);
   backdrop-filter: blur(10px);
   background-size: cover;
   background-position: center;
@@ -204,6 +204,8 @@ body {
 
 .slider-content.active {
   display: block;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .disc {
@@ -217,12 +219,14 @@ body {
   opacity: 1;
   transition: 0.3s;
   color: #fff;
+  scrollbar-width: none;
 }
 
 .hidden-text {
   display: none;
   opacity: 1;
   transition: 0.3s;
+  scrollbar-width: 300;
 }
 
 .hidden {
