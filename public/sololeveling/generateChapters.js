@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const { listImages } = require('./gcs'); // Подключаем модуль работы с GCS
 
-const totalChapters = 145; // Количество глав
-const outputDir = path.join('C:/Users/diff/code/manhva-site/public/tokyo ghoul/', 'chapters'); // Локальная папка для сохранения HTML
+const totalChapters = 205; // Количество глав
+const outputDir = path.join('C:/Users/diff/code/manhva-site/public/sololeveling/', 'chapters'); // Локальная папка для сохранения HTML
 
 // Генерация HTML-шаблона
 const template = (chapterNumber, images, prevChapter, nextChapter) => `
@@ -238,7 +238,7 @@ padding: 10px 15px;
       <div class="logo-container">
         <a href="/index.html"><img src="/public/image/logo.webp" alt="Logo" class="logo"></a>
         <a href="/index.html"><span class="site-title">Wabi & Sabi</span></a>
-        <a href="/public/tokyo ghoul/index.html">Tokyo Ghoul</a>
+        <a href="/public/sololeveling/index.html">Solo Leveling</a>
       </div>
     </nav>
     <nav class="navbar">
@@ -263,7 +263,7 @@ padding: 10px 15px;
   <h1>Глава ${chapterNumber}</h1>
 
   <div class="images">
-    ${images.map((img) => `<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul-chapters/${chapterNumber}/images/${img}" alt="Страница">`).join('\n')}
+    ${images.map((img) => `<img src="https://storage.googleapis.com/chapters-for-manga/sololeveling-chapters/${chapterNumber}/images/${img}" alt="Страница">`).join('\n')}
   </div>
 
   
