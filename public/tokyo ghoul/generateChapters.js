@@ -13,6 +13,7 @@ const template = (chapterNumber, images, prevChapter, nextChapter) => `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Глава ${chapterNumber}</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>  
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -33,7 +34,7 @@ const template = (chapterNumber, images, prevChapter, nextChapter) => `
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 90%;
   justify-content: center;
   align-items: center;
   opacity: 0; /* Начальное состояние: невидимое */
@@ -49,15 +50,22 @@ const template = (chapterNumber, images, prevChapter, nextChapter) => `
 }
 
 .modal-content {
- background: rgb(116,116,116);
-background: linear-gradient(180deg, rgba(116,116,116,0.9626225490196079) 0%, rgba(172,172,172,0.9542191876750701) 24%, rgba(147,147,147,0.9598214285714286) 70%, rgba(199,199,199,0.9458158263305322) 95%);
+display: flex;
+  flex-direction: column;
+    background: #171717;
   padding: 20px;
+   padding-top: 15%;
   border-radius: 10px;
   max-width: 90%; /* Адаптация под экран */
-  max-height: 80%; /* Ограничение высоты */
+  max-height: 90%; /* Ограничение высоты */
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   overflow-y: auto; /* Прокрутка при переполнении */
+  scrollbar-width: none;
+  margin-left: 60%;
+  width: 60vh;
+  height: 100%;
+  z-index: 1;
 }
 
 .modal-content a {
@@ -65,11 +73,21 @@ background: linear-gradient(180deg, rgba(116,116,116,0.9626225490196079) 0%, rgb
   margin: 5px;
   padding: 10px 15px;
   text-decoration: none;
-  background-color: #1a1a1a;
+  background-color: #252525;
   color: #f6f6f6;
   border-radius: 5px;
   transition: .3s;
+  opacity: 1;
 }
+
+.modal-content .current-chapter {
+  background-color: #444; /* Новый цвет фона */
+  color: #fff; /* Цвет текста */
+  font-weight: bold; /* Выделение шрифта */
+  cursor: default; /* Убираем указатель */
+  pointer-events: none; /* Делаем не кликабельным */
+}
+
 
 .modal-content a:hover {
   background-color: #444;
@@ -88,7 +106,7 @@ justify-content: flex-end;
 padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: transparent;
     color: white;
     border: none;
     border-radius: 5px;
@@ -130,21 +148,25 @@ padding: 10px 15px;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box; /* Убедились, что padding включён в размеры */
+  z-index: 9999;
 }
     .logo-container {
   display: flex;
   align-items: center;
   flex-wrap: wrap; /* Добавлено для адаптации */
+  opacity: 999;
 }
     .logo {
       width: 40px;
       border-radius: 50%;
       margin-right: 10px;
-    }
+      opacity: 999;
+      }
     .site-title {
       font-size: 18px;
       color: white;
       font-weight: 500;
+      opacity: 999;
     }
     .header a {
       position: relative;
@@ -154,6 +176,7 @@ padding: 10px 15px;
       text-decoration: none;
       margin-left: 40px;
       cursor: pointer;
+      opacity: 999;
     }
     .header a::before {
       content: "";
@@ -164,12 +187,15 @@ padding: 10px 15px;
       height: 2px;
       background: white;
       transition: 0.3s;
+      opacity: 999;
     }
     .header i {
       font-size: 20px;
+      opacity: 999;
     }
     .header a:hover::before {
       width: 100%;
+      opacity: 999;
     }
     .nav-bar {
   display: flex;
@@ -187,10 +213,23 @@ padding: 10px 15px;
       display: flex;
       align-items: center;
       gap: 5px;
+        transition: .4s;
     }
     .nav-bar a:hover {
       text-decoration: underline;
     }
+
+    .nav-bar i {
+    font-size: 20px;
+    }
+    
+    .modal-content .current-chapter {
+  background-color: #1976d2;
+  color: #fff;          
+  font-weight: bold;    
+  cursor: default;      
+  pointer-events: none;  
+}
   </style>
 </head>
 <body>
@@ -207,38 +246,31 @@ padding: 10px 15px;
       <a href="#">User</a>
     </nav>
   </header>
-<button id="openModalButton">Все главы</button>
 
 <div id="chapterModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeModal()">×</span>
-    <h2>Доступные главы</h2>
-    ${Array.from({ length: totalChapters }, (_, i) =>
-      `<a href="../${i + 1}/index.html">Глава ${i + 1}</a>`
-    ).join('')}
-  </div>
+  <span class="close" onclick="closeModal()"></span>
+  ${Array.from({ length: totalChapters }, (_, i) =>
+  `<a href="../${i + 1}/index.html" class="${i + 1 === chapterNumber ? 'current-chapter' : ''}">Глава ${i + 1}</a>`
+).join('')}
+</div>
 </div>
 <div class="nav-bar">
-    ${prevChapter ? `<a href="../${prevChapter}/index.html"><i class='bx bx-skip-previous'></i>prew</a>` : '<span></span>'}
-    <a href="./index.html">${chapterNumber}</a>
-    ${nextChapter ? `<a href="../${nextChapter}/index.html">next<i class='bx bx-skip-next'></i></a>` : '<span></span>'}
+    ${prevChapter ? `<a href="../${prevChapter}/index.html"><i class='bx bx-skip-previous'></i></a>` : '<span></span>'}
+    <a href="#" id="openModalButton">${chapterNumber}</a>
+    ${nextChapter ? `<a href="../${nextChapter}/index.html"><i class='bx bx-skip-next'></i></a>` : '<span></span>'}
   </div>
   <h1>Глава ${chapterNumber}</h1>
+
   <div class="images">
     ${images.map((img) => `<img src="https://storage.googleapis.com/chapters-for-manga/tokyo-ghoul-chapters/${chapterNumber}/images/${img}" alt="Страница">`).join('\n')}
   </div>
 
-  <div id="chapterModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">×</span>
-      <h2>Доступные главы</h2>
-      ${Array.from({ length: totalChapters }, (_, i) => `<a href="../${i + 1}/index.html">Глава ${i + 1}</a>`).join('')}
-    </div>
-  </div>
+  
   <div class="nav-bar">
-    ${prevChapter ? `<a href="../${prevChapter}/index.html"><i class='bx bx-skip-previous'></i>prew</a>` : '<span></span>'}
-    <a href="./index.html">${chapterNumber}</a>
-    ${nextChapter ? `<a href="../${nextChapter}/index.html">next<i class='bx bx-skip-next'></i></a>` : '<span></span>'}
+    ${prevChapter ? `<a href="../${prevChapter}/index.html"><i class='bx bx-skip-previous'></i></a>` : '<span></span>'}
+    <a href="#" id="openModalButton">${chapterNumber}</a>
+    ${nextChapter ? `<a href="../${nextChapter}/index.html"><i class='bx bx-skip-next'></i></a>` : '<span></span>'}
   </div>
 <script>
     // Получение кнопки и модального окна
@@ -264,6 +296,7 @@ chapterModal.addEventListener('click', (event) => {
     closeModal();
   }
 });
+
   </script>
 </body>
 </html>
